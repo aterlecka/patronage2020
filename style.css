@@ -1,0 +1,90 @@
+.main {
+  margin-left: 40px;
+  margin-top: 20px;
+}
+
+#allCalculator {
+  -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 1px;
+  margin-left: 50px;
+  width: 350px;
+  height: 370px;
+  display: table;
+}
+#allCalculator #result {
+  background-color: #9b9b9b;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  height: 50px;
+  width: 350px;
+  padding-right: 15px;
+  padding-top: 10px;
+  text-align: right;
+  border-bottom: dotted 2px black;
+}
+
+.mainRow .delete, .mainRow .clear {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+  border-radius: 5%;
+}
+.mainRow .delete:hover, .mainRow .clear:hover {
+  background-color: #bc0000;
+  border: 1px solid #ff00;
+  -webkit-box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.rows {
+  display: table;
+}
+.rows .operator {
+  background-color: #256bff;
+  border: 1px solid #256bff;
+  border-radius: 10%;
+}
+.rows .operator:hover {
+  background-color: #2553a7;
+  border: 1px solid #2553a7;
+  -webkit-box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+  font-size: 20px;
+  height: 50px;
+  width: 70px;
+  border-radius: 10%;
+  background-color: #556471;
+  margin-bottom: 5px;
+  margin-left: -2px;
+  text-align: center;
+}
+
+.btn, .btn-primary, .btn-lg {
+  font-size: 20px;
+  height: 50px;
+  width: 70px;
+  border-radius: 10%;
+  background-color: #556471;
+  margin-bottom: 5px;
+  margin-left: -4px;
+}
+
+.outer:focus .mask {
+  transform: rotate(270deg);
+  height: 50px;
+  top: 20px;
+}
+
+.ring:focus {
+  position: absolute;
+  top: 25px;
+  width: 60px;
+  height: 60px;
+  border: solid 3px black;
+  border-radius: 120px;
+}
+
+/*# sourceMappingURL=style.css.map */

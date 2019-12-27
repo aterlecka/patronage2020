@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="active.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet"
+          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <title>Calculator</title>
+
+</head>
+<body>
+
+<div id="allCalculator">
+    <div id="result"></div>
+    <div class="main">
+        <div class="mainRow">
+            <button value="C" class="button delete btn btn-raised btn-danger">C</button>
+            <button value="clear" id="clear" class="button clear opera-bg btn btn-raised btn-danger">CE</button>
+        </div>
+
+        <div class="rows">
+            <button value="1" class=" button number num-bg btn btn-raised btn-secondary">1</button>
+            <button value="2" class=" button number num-bg btn btn-raised btn-secondary">2</button>
+            <button value="3" class="button number num-bg btn btn-raised btn-secondary">3</button>
+            <button value="*" class="button operator opera-bg btn btn-raised btn-info">*</button>
+        </div>
+
+        <div class="rows">
+            <button value="4" class="button number num-bg btn btn-raised btn-secondary">4</button>
+            <button value="5" class="button number num-bg btn btn-raised btn-secondary">5</button>
+            <button value="6" class="button number num-bg btn btn-raised btn-secondary">6</button>
+            <button value="/" class="button operator opera-bg btn btn-raised btn-info">/</button>
+        </div>
+
+        <div class="rows">
+            <button value="7" class="button number btn btn-raised btn-secondary">7</button>
+            <button value="8" class="button number btn btn-raised btn-secondary">8</button>
+            <button value="9" class="button number btn btn-raised btn-secondary">9</button>
+            <button value="-" class="button operator opera-bg btn btn-raised btn-info">-</button>
+        </div>
+
+        <div class="rows">
+            <button value="." class="button point btn btn-raised btn-secondary"  id="point">,</button>
+            <button value="0" class="button number btn btn-raised btn-secondary">0</button>
+            <button value="=" class="button operator equal btn btn-raised btn-secondary">=</button>
+            <button value="+" class="button operator opera-bg btn btn-raised btn-info">+</button>
+        </div>
+    </div>
+</div>
+
+<div class="outer">
+    <div class="mask">
+        <div class="ring"></div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
+<script>$(document).ready(function () {
+    $('body').bootstrapMaterialDesign();
+});</script>
+</body>
+</html>
