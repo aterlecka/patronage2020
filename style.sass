@@ -1,17 +1,16 @@
 .main
-  //display: inline-block
+  position: absolute
   margin-left: 40px
   margin-top: 20px
 
-#allCalculator
-
-  -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2)
-  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2)
+#calculator
+  -webkit-box-shadow: 0 1px 4px 0 rgba(97, 97, 97, 0.2)
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2)
   border-radius: 1px
   margin-left: 50px
   width: 350px
   height: 370px
-  display: table
+  position: absolute
 
   #result
     background-color: #9b9b9b
@@ -22,37 +21,7 @@
     padding-right: 15px
     padding-top: 10px
     text-align: right
-    border-bottom: dotted 2px black
-
-.mainRow
-
-  .delete, .clear
-    background-color: #ff0000
-    border: 1px solid #ff0000
-    border-radius: 5%
-    //display: inline-block
-
-    &:hover
-      background-color: #bc0000
-      border: 1px solid #ff00
-      -webkit-box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2)
-      box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2)
-
-.rows
-  display: table
-
-  .operator
-    background-color: #256bff
-    border: 1px solid #256bff
-    //display: inline-block
-    border-radius: 10%
-
-    &:hover
-      background-color: #2553a7
-      border: 1px solid #2553a7
-      -webkit-box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2)
-      box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2)
-
+    border-bottom: dotted 2px #6f6f6f
 
 .button
   font-size: 20px
@@ -63,67 +32,13 @@
   margin-bottom: 5px
   margin-left: -2px
   text-align: center
-  //display: inline-block
-  //cursor: pointer
-  //color: #ffffff
-  //border: 1px solid #556471
-  //transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s
-  //
-  //&:hover
-  //  background-color: #4e4e4e
-  //  border: 1px solid #4e4e4e
-
-//.display
-//  background-color: pink
-//  border: 1px solid #ddd
-//  border-radius: 7px
-//  height: 50px
-//  width: 350px
-//  padding-right: 15px
-//  padding-top: 30px
-//  text-align: right
-//  border-bottom: dotted 2px black
+  position: absolute
 
 .btn, .btn-primary, .btn-lg
-  font-size: 20px
   height: 50px
   width: 70px
   border-radius: 10%
   background-color: #556471
   margin-bottom: 5px
   margin-left: -4px
-//
-//  text-align: center
-//  display: inline-block
-//  cursor: pointer
-//  color: #ffffff
-//  border: 1px solid #556471
-//  transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s
-//
-//  &:hover
-//    background-color: #4e4e4e
-//    border: 1px solid #4e4e4e
-  //.equal
-  //  color: #ffffff
-  //  border: 1px solid #556471
-  // transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s
-  //
-  // &:hover
-  //  background-color: #4e4e4e
-  //  border: 1px solid #4e4e4e
-
-.outer
-  &:focus
-      .mask
-        transform: rotate(270deg)
-        height: 50px
-        top: 20px
-
-.ring
-  &:focus
-   position: absolute
-   top: 25px
-   width: 60px
-   height: 60px
-   border: solid 3px black
-   border-radius: 120px
+  position: absolute

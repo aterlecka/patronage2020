@@ -4,88 +4,88 @@ window.onload = function () {
     let pendingValue = "";
     let evalStringArray = [];
     let resultOnTheScreen = document.getElementById("result");
-    let digitInCalculator = document.querySelectorAll(".number");
-    let clearAllDigits = document.getElementById('clear');
+    let digitOnCalculator = document.querySelectorAll(".number");
+    let clearAllDigits = document.querySelector(".clear");
     let operatorInCalculator = document.querySelectorAll(".operator");
     let deleteOneDigit = document.querySelector(".delete");
-    let pointInCalculator = document.getElementById("point");
-    let circle = document.getElementsByClassName("outer");
+    let dotOnCalculator = document.getElementById("dot");
 
-
-
-    let numberClick = (num) => {
-        if (displayValue === '0')
-            displayValue = '';
+    let displayValueOnScreen = (num) => {
+        if (displayValue === "0")
+            displayValue = "";
         displayValue += num;
         resultOnTheScreen.innerHTML = displayValue;
     };
+
     let updateDisplayValue = (clickObj) => {
         let btnText = clickObj.target.innerText;
-        numberClick(btnText);
+        displayValueOnScreen(btnText);
     };
+
     let performOperation = (clickObj) => {
+        const PLUS = "+";
+        const MINUS = "-";
+        const DIVIDE = "/";
+        const MULTIPLY = "*";
+        const EQUALS = "=";
         let operation = clickObj.target.innerText;
+
         switch (operation) {
-            case '+':
-                pendingValue = Number.parseFloat(displayValue);
-                resultOnTheScreen.innerHTML = displayValue;
-                displayValue = '';
-                evalStringArray.push(pendingValue);
-                evalStringArray.push('+');
+            case PLUS:
+                addValueToEvalString(PLUS);
                 break;
-            case '-':
-                pendingValue = Number.parseFloat(displayValue);
-                resultOnTheScreen.innerHTML = displayValue;
-                displayValue = '';
-                evalStringArray.push(pendingValue);
-                evalStringArray.push('-');
+            case MINUS:
+                addValueToEvalString(MINUS);
                 break;
-            case '*':
-                pendingValue = Number.parseFloat(displayValue);
-                resultOnTheScreen.innerHTML = displayValue;
-                displayValue = '';
-                evalStringArray.push(pendingValue);
-                evalStringArray.push('*');
+            case MULTIPLY:
+                addValueToEvalString(MULTIPLY);
                 break;
-            case '/':
-                pendingValue = Number.parseFloat(displayValue);
-                resultOnTheScreen.innerHTML = displayValue;
-                displayValue = '';
-                evalStringArray.push(pendingValue);
-                evalStringArray.push('/');
+            case DIVIDE:
+                addValueToEvalString(DIVIDE);
                 break;
-            case '=':
+            case EQUALS:
                 evalStringArray.push(displayValue);
                 let resultEval = eval(evalStringArray.join(''));
                 resultOnTheScreen.innerHTML = resultEval;
                 displayValue = resultEval;
                 pendingValue = displayValue;
                 evalStringArray = [];
-                displayValue = resultEval + '';
+                displayValue = resultEval + "";
                 break;
             default:
                 break;
         }
     };
-    for (let i = 0; i < digitInCalculator.length; i++) {
-        digitInCalculator[i].addEventListener('click', updateDisplayValue, false);
+
+    let addValueToEvalString = (selectedOperator) => {
+        pendingValue = Number.parseFloat(displayValue);
+        resultOnTheScreen.innerHTML = displayValue;
+        displayValue = "";
+        evalStringArray.push(pendingValue);
+        evalStringArray.push(selectedOperator);
+    };
+
+    for (let i = 0; i < digitOnCalculator.length; i++) {
+        digitOnCalculator[i].addEventListener('click', updateDisplayValue, false);
     }
     for (let i = 0; i < operatorInCalculator.length; i++) {
         operatorInCalculator[i].addEventListener('click', performOperation, false);
     }
+
     clearAllDigits.onclick = () => {
         displayValue = '0';
         pendingValue = undefined;
         evalStringArray = [];
         resultOnTheScreen.innerHTML = displayValue;
     };
+
     deleteOneDigit.onclick = () => {
         let lengthOfDisplayVal = displayValue.length;
         displayValue = displayValue.slice(0, lengthOfDisplayVal - 1);
         resultOnTheScreen.innerHTML = displayValue;
     };
 
-    pointInCalculator.onclick = () => {
+    dotOnCalculator.onclick = () => {
         if (displayValue === '')
             displayValue += '0';
         displayValue += ".";
