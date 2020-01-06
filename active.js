@@ -92,14 +92,3 @@ window.onload = function () {
         resultOnTheScreen.innerHTML = displayValue;
     };
 };
-
-
-
-
-
-
-
-
-
-
-
