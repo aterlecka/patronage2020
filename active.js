@@ -9,12 +9,39 @@ window.onload = function () {
     let operatorInCalculator = document.querySelectorAll(".operator");
     let deleteOneDigit = document.querySelector(".delete");
     let dotOnCalculator = document.getElementById("dot");
+    let equalResult = document.querySelector(".equal");
 
     let displayValueOnScreen = (num) => {
-        if (displayValue === "0")
+
+        let lastElementInDisplayValue = returnLastElementInDisplay();
+
+        if (displayValue === "0") {
             displayValue = "";
-        displayValue += num;
+        }
+        if (validateLastElement(lastElementInDisplayValue, num)) {
+            displayValue += num;
+        }
         resultOnTheScreen.innerHTML = displayValue;
+    };
+
+    let returnLastElementInDisplay = () => {
+        let lastElementInDisplayValue;
+
+        if (displayValue !== "") {
+            lastElementInDisplayValue = displayValue.charAt(displayValue.length - 1);
+        } else {
+            lastElementInDisplayValue = " ";
+        }
+        return lastElementInDisplayValue;
+    };
+
+    let validateLastElement = (lastElementInDisplayValue, num) => {
+        let operators = '+-/*';
+        let isLastElementAnOperator = operators.indexOf(lastElementInDisplayValue) > -1;
+        let isNumAnOperator = operators.indexOf(num) > -1;
+
+        return !(isLastElementAnOperator && isNumAnOperator);
+
     };
 
     let updateDisplayValue = (clickObj) => {
@@ -22,55 +49,70 @@ window.onload = function () {
         displayValueOnScreen(btnText);
     };
 
-    let performOperation = (clickObj) => {
-        const PLUS = "+";
-        const MINUS = "-";
-        const DIVIDE = "/";
-        const MULTIPLY = "*";
-        const EQUALS = "=";
-        let operation = clickObj.target.innerText;
+    let parseCalculationString = (s) => {
+        let calculation = [],
+            current = '';
+        console.log(typeof resultOnTheScreen.innerHTML)
 
-        switch (operation) {
-            case PLUS:
-                addValueToEvalString(PLUS);
-                break;
-            case MINUS:
-                addValueToEvalString(MINUS);
-                break;
-            case MULTIPLY:
-                addValueToEvalString(MULTIPLY);
-                break;
-            case DIVIDE:
-                addValueToEvalString(DIVIDE);
-                break;
-            case EQUALS:
-                evalStringArray.push(displayValue);
-                let resultEval = eval(evalStringArray.join(''));
-                resultOnTheScreen.innerHTML = resultEval;
-                displayValue = resultEval;
-                pendingValue = displayValue;
-                evalStringArray = [];
-                displayValue = resultEval + "";
-                break;
-            default:
-                break;
+        for (let i = 0, ch; ch = s.charAt(i); i++) {
+            if ('+-/*'.indexOf(ch) > -1) {
+                if (current == '' && ch == '') {
+                    current = '';
+                } else {
+                    calculation.push(parseFloat(current), ch);
+                    current = '';
+                }
+            } else {
+                current += s.charAt(i);
+            }
         }
+        if (current != '') {
+            calculation.push(parseFloat(current));
+        }
+
+        return calculation;
     };
 
-    let addValueToEvalString = (selectedOperator) => {
-        pendingValue = Number.parseFloat(displayValue);
-        resultOnTheScreen.innerHTML = displayValue;
-        displayValue = "";
-        evalStringArray.push(pendingValue);
-        evalStringArray.push(selectedOperator);
+    let calculate = (calc) => {
+        let operators = [{'*': (a, b) => a * b, '/': (a, b) => a / b},
+                {'+': (a, b) => a + b, '-': (a, b) => a - b}],
+            newCalc = [],
+            currentOperator;
+        for (let i = 0; i < operators.length; i++) {
+            for (let j = 0; j < calc.length; j++) {
+                if (operators[i][calc[j]]) {
+                    currentOperator = operators[i][calc[j]];
+                } else if (currentOperator) {
+                    newCalc[newCalc.length - 1] =
+                        currentOperator(newCalc[newCalc.length - 1], calc[j]);
+                    currentOperator = null;
+                } else {
+                    newCalc.push(calc[j]);
+                }
+                console.log(newCalc);
+            }
+            calc = newCalc;
+            newCalc = [];
+        }
+        if (calc.length > 1) {
+            console.log('Error');
+            return calc;
+        } else {
+            return calc[0].toString();
+        }
     };
 
     for (let i = 0; i < digitOnCalculator.length; i++) {
         digitOnCalculator[i].addEventListener('click', updateDisplayValue, false);
     }
     for (let i = 0; i < operatorInCalculator.length; i++) {
-        operatorInCalculator[i].addEventListener('click', performOperation, false);
+        operatorInCalculator[i].addEventListener('click', updateDisplayValue, false);
     }
+
+    equalResult.onclick = () => {
+        resultOnTheScreen.innerHTML = calculate(parseCalculationString(resultOnTheScreen.innerHTML));
+        displayValue = resultOnTheScreen.innerHTML;
+    };
 
     clearAllDigits.onclick = () => {
         displayValue = '0';
@@ -90,5 +132,5 @@ window.onload = function () {
             displayValue += '0';
         displayValue += ".";
         resultOnTheScreen.innerHTML = displayValue;
-    };
+    }
 };
