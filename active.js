@@ -12,9 +12,7 @@ window.onload = function () {
     let equalResult = document.querySelector(".equal");
 
     let displayValueOnScreen = (num) => {
-
         let lastElementInDisplayValue = returnLastElementInDisplay();
-
         if (displayValue === "0") {
             displayValue = "";
         }
@@ -36,7 +34,7 @@ window.onload = function () {
     };
 
     let validateLastElement = (lastElementInDisplayValue, num) => {
-        let operators = '+-/*';
+        let operators = '+-/*^√';
         let isLastElementAnOperator = operators.indexOf(lastElementInDisplayValue) > -1;
         let isNumAnOperator = operators.indexOf(num) > -1;
 
@@ -55,7 +53,7 @@ window.onload = function () {
         console.log(typeof resultOnTheScreen.innerHTML)
 
         for (let i = 0, ch; ch = s.charAt(i); i++) {
-            if ('+-/*'.indexOf(ch) > -1) {
+            if ('+-/*^√'.indexOf(ch) > -1) {
                 if (current == '' && ch == '') {
                     current = '';
                 } else {
@@ -74,7 +72,9 @@ window.onload = function () {
     };
 
     let calculate = (calc) => {
-        let operators = [{'*': (a, b) => a * b, '/': (a, b) => a / b},
+        let operators = [{'^': (a, b) => Math.pow(a, b)},
+                {"√":(a, b)=>Math.pow(b, 1/a)},
+                {'*': (a, b) => a * b, '/': (a, b) => a / b},
                 {'+': (a, b) => a + b, '-': (a, b) => a - b}],
             newCalc = [],
             currentOperator;
