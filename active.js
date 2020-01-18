@@ -10,6 +10,7 @@ window.onload = function () {
     let deleteOneDigit = document.querySelector(".delete");
     let dotOnCalculator = document.getElementById("dot");
     let equalResult = document.querySelector(".equal");
+    let valueFromFetch;
 
     let displayValueOnScreen = (num) => {
         let lastElementInDisplayValue = returnLastElementInDisplay();
@@ -37,9 +38,7 @@ window.onload = function () {
         let operators = '+-/*^√';
         let isLastElementAnOperator = operators.indexOf(lastElementInDisplayValue) > -1;
         let isNumAnOperator = operators.indexOf(num) > -1;
-
         return !(isLastElementAnOperator && isNumAnOperator);
-
     };
 
     let updateDisplayValue = (clickObj) => {
@@ -47,33 +46,79 @@ window.onload = function () {
         displayValueOnScreen(btnText);
     };
 
+    let convertValueToPLN = (valueToConvert) => {
+        let codeAndValue = splitCodeFromAmount(valueToConvert);
+        let currencyCode = codeAndValue[0][0];
+        let currencyAmount = codeAndValue[0][1];
+        return multiply(currencyAmount, valueForCurrency(currencyCode));
+    };
+
+    let splitCodeFromAmount = (valueToSplit) => {
+        let codeAndValue = [];
+        let toArray = valueToSplit.split(' ');
+        toArray.forEach(function (item) {
+            codeAndValue.push(item.replace(/\'/g, '').split(/(\d+)/).filter(Boolean));
+        });
+        return codeAndValue;
+    };
+
+    let valueForCurrency = (currencyCode) => {
+        for (let i = 0; i < valueFromFetch[0].rates.length; i++) {
+            let ratez = valueFromFetch[0].rates;
+            if (currencyCode.indexOf(ratez[i].code) > -1) {
+                return ratez[i].mid;
+            }
+        }
+    };
+
+    let multiply = (currencyAmount, currencyValue) => {
+        return currencyAmount * currencyValue;
+    };
+
     let parseCalculationString = (s) => {
-        let calculation = [],
+        let divideInputValueToTypes = [],
             current = '';
-        console.log(typeof resultOnTheScreen.innerHTML)
+        let codesArray = ["THB", "USD", "AUD", "HKD", "CAD", "NZD", "SGD", "EUR", "HUF", "CHF", "GBP", "UAH", "JPY",
+            "CZK", "DKK", "ISK", "NOK", "SEK", "HRK", "RON", "BGN", "TRY", "ILS", "CLP", "PHP", "MXN", "ZAR", "BRL",
+            "MYR", "RUB", "IDR", "INR", "KRW", "CNY", "XDR"];
 
         for (let i = 0, ch; ch = s.charAt(i); i++) {
+
             if ('+-/*^√'.indexOf(ch) > -1) {
                 if (current == '' && ch == '') {
                     current = '';
                 } else {
-                    calculation.push(parseFloat(current), ch);
+                    if (current.indexOf(s)) {
+                        let subCurrent = current;
+                        codesArray.forEach(code => {
+                            if (subCurrent.indexOf(code) > -1) {
+                                current = convertValueToPLN(current);
+                            }
+                        });
+                    }
+                    divideInputValueToTypes.push(parseFloat(current), ch);
                     current = '';
                 }
             } else {
                 current += s.charAt(i);
             }
         }
-        if (current != '') {
-            calculation.push(parseFloat(current));
-        }
+        let secondSubCurrent = current;
+        codesArray.forEach(element => {
+            if (secondSubCurrent.indexOf(element) > -1) {
+                current = convertValueToPLN(current);
+            }
+        });
 
-        return calculation;
+        if (current != '') {
+            divideInputValueToTypes.push(parseFloat(current));
+        }
+        return divideInputValueToTypes;
     };
 
     let calculate = (calc) => {
         let operators = [{'^': (a, b) => Math.pow(a, b)},
-                {"√":(a, b)=>Math.pow(b, 1/a)},
+                {"√": (a, b) => Math.pow(b, 1 / a)},
                 {'*': (a, b) => a * b, '/': (a, b) => a / b},
                 {'+': (a, b) => a + b, '-': (a, b) => a - b}],
             newCalc = [],
@@ -89,13 +134,11 @@ window.onload = function () {
                 } else {
                     newCalc.push(calc[j]);
                 }
-                console.log(newCalc);
             }
             calc = newCalc;
             newCalc = [];
         }
         if (calc.length > 1) {
-            console.log('Error');
             return calc;
         } else {
             return calc[0].toString();
@@ -132,5 +175,28 @@ window.onload = function () {
             displayValue += '0';
         displayValue += ".";
         resultOnTheScreen.innerHTML = displayValue;
-    }
+    };
+
+    const app = document.getElementById('dropdown');
+    const container = document.getElementById("dropdown-content");
+    app.appendChild(container);
+
+    fetch('http://api.nbp.pl/api/exchangerates/tables/A/?format=json')
+        .then(resp => resp.json())
+        .then(resp => {
+            valueFromFetch = resp;
+
+            resp[0].rates.forEach(rates => {
+                const card = document.createElement('button');
+                card.setAttribute('value', card.textContent = rates.mid);
+                card.setAttribute('class', 'btn btn-raised btn-info');
+                card.textContent = rates.code;
+                container.appendChild(card);
+                card.onclick = (clickObj) => {
+                    let btnText = clickObj.target.innerText;
+                    displayValueOnScreen(btnText);
+                };
+            })
+        })
+        .catch(error => console.log('Blad: ', error) + alert('Blad podczas pobierania danych'));
 };
