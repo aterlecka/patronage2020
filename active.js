@@ -66,7 +66,8 @@ window.onload = function () {
         for (let i = 0; i < valueFromFetch[0].rates.length; i++) {
             let ratez = valueFromFetch[0].rates;
             if (currencyCode.indexOf(ratez[i].code) > -1) {
-                return ratez[i].mid;
+                let valueForCurrent = ratez[i].mid;
+                return valueForCurrent;
             }
         }
     };
@@ -89,6 +90,8 @@ window.onload = function () {
                     current = '';
                 } else {
                     if (current.indexOf(s)) {
+
+
                         let subCurrent = current;
                         codesArray.forEach(code => {
                             if (subCurrent.indexOf(code) > -1) {
@@ -104,6 +107,7 @@ window.onload = function () {
             }
         }
         let secondSubCurrent = current;
+
         codesArray.forEach(element => {
             if (secondSubCurrent.indexOf(element) > -1) {
                 current = convertValueToPLN(current);
@@ -132,7 +136,7 @@ window.onload = function () {
                         currentOperator(newCalc[newCalc.length - 1], calc[j]);
                     currentOperator = null;
                 } else {
-                    newCalc.push(calc[j]);
+                    newCalc.push(calc[j]); //[55.0]
                 }
             }
             calc = newCalc;
@@ -199,4 +203,4 @@ window.onload = function () {
             })
         })
         .catch(error => console.log('Blad: ', error) + alert('Blad podczas pobierania danych'));
-};
+}
